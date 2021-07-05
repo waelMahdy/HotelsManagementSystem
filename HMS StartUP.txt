@@ -1,0 +1,42 @@
+**Design the database by setting up the Models first
+AccomodationTypes
+
+ID     Name
+1    Rooms
+2    Apartment
+
+
+
+AccomodationPackages
+
+ID     AccomodationTypeID    Name            NoOfRoom          FeePerNight
+1          1               satandard           1                 50
+2          1               deluxe              1                 70
+3          1               suites              1                 100
+4          2               2 bedroom           2                 150
+5          2               3 bedroom           3                 150
+
+
+
+Accomodations  --select*from Accomodations where AccomodationPackageID =
+ID       AccomodationPackageID      RoomNo
+
+1           1                        190
+2           1                        191
+3           2                        192
+4          4                       apartment No 193
+5          4                       apartment No 194
+
+
+Bookings
+
+ID      AccomodationID         FromDate               Duration(No of stay nights)
+
+1          3                     22 Jul                  4
+
+
+
+
+
+
+

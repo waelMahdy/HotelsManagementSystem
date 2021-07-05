@@ -1,0 +1,62 @@
+﻿@model HMS.Areas.Dashboard.ViewModels.RoleActionModel
+
+@if (Model != null)
+{
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+                @if (!string.IsNullOrEmpty(Model.ID))
+                {<span> Edit User </span>}
+                else
+                { <span> Create User </span>
+                }
+
+            </h5>
+    
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form id="actionForm">
+                <input type="hidden" name="ID" value="@Model.ID" />
+                <div class="form-group">
+                    <label for="fullName">Name</label>
+                    <input type="text" class="form-control" id="fullName" name="Name" placeholder="Enter Full Name" value="@Model.Name">
+                </div>
+          
+
+            </form>
+            <div class="errorDiv alert-danger ">
+
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="actionButton" type="button" class="btn btn-primary"><i class="fas fa-save mr-1"></i>Save changes</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times mr-1"></i> Close</button>
+
+        </div>
+    </div>
+}
+
+
+
+
+<script>
+    $("#actionButton").click(function () {
+        $.ajax({
+            url: '@Url.Action("Action","Roles")',
+            method: 'POST',
+            data: $("#actionForm").serialize()
+        })
+            .done(function (response) {
+          
+                if (response.Success)
+                {
+                    location.reload();
+                } else {
+                    $(".errorDiv").html(response.Message);
+                }
+            });
+    });
+</script>

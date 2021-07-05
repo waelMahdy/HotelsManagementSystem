@@ -1,0 +1,88 @@
+﻿
+@model HMS.Areas.Dashboard.ViewModels.ShowAllAccomodationsViewModel
+@if (Model.AccomodationPackage != null && Model != null)
+{
+    var thumbnailPicture = Model.AccomodationPackage.AccomodationPackagePictures != null && Model.AccomodationPackage.AccomodationPackagePictures.Count() > 0 ? Model.AccomodationPackage.AccomodationPackagePictures.First() : new HMS.Entities.AccomodationPackagePicture();
+    var thumbnailURL = thumbnailPicture.Picture != null ? thumbnailPicture.Picture.URL : "default-image.jpg";
+    var s = "";
+    <aside id="colorlib-hero">
+        <div class="flexslider">
+            <ul class="slides">
+                <li style="background-image: url(/images/img_bg_5.jpg);">
+                    <div class="overlay"></div>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12 col-md-offset-3 slider-text">
+                                <div class="slider-text-inner slider-text-inner2 text-center">
+                                    <h2>@Model.AccomodationPackage.AccomodationType.Name</h2>
+                                    <h1>@Model.AccomodationPackage.Name</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </aside>
+    <div id="colorlib-amenities">
+        <div class="container">
+            <div class="row">
+                <div class="amenities-flex">
+
+                    <div class="desc animate-box">
+                        <p class="price">
+                            <span class="currency">$</span>
+                            <span class="price-room">@Model.AccomodationPackage.FeePerNight</span>
+                            <span class="per">/ per night / room</span><br />
+                            <strong> <span class="per">No of rooms: @Model.AccomodationPackage.NoOfRoom @s @(Model.AccomodationPackage.NoOfRoom > 1? s="rooms" :s="room")</span></strong>
+                        </p>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi voluptates eius, nam laudantium, quasi laborum cumque asperiores totam est perferendis itaque id esse quidem recusandae sequi aut? Ratione, enim, consequatur!</p>
+                    </div>
+                    <div class="amenities-img animate-box" style="background-image: url(/images/site/@thumbnailURL);"></div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+    <div class="container">
+        <div class="row ">
+            <div class="col-md-12 animate-box">
+                <div class="owl-carousel owl-carousel2">
+
+
+                    @if (Model.Accomodations != null && Model.Accomodations.Count() > 0)
+                    {
+
+                        foreach (var accomodation in Model.Accomodations)
+                        {
+
+
+                    <div class="item">
+                        <img src="/images/site/@thumbnailURL" height="250" alt="@Model.AccomodationPackage.Name" title="@Model.AccomodationPackage.Name @accomodation.Name" />
+                        <div class="desc text-center">
+                            <p class="price">
+                                @accomodation.Name
+                            </p>
+                            <p class="price">
+                                @accomodation.Description
+                            </p>
+                            <br />
+
+                        </div>
+                        <div class="col-md-12 text-center animate-box">
+                            <p><a class="btn btn-primary btn-book" href="@Url.Action("Details","Accomodation", new {AccomodationPackageID=@Model.AccomodationPackage.ID})#colorlib-contact">Book now!</a></p>
+                        </div>
+                    </div>
+                        }
+                    }
+
+
+                </div>
+            </div>
+        
+        </div>
+    </div>
+}
+

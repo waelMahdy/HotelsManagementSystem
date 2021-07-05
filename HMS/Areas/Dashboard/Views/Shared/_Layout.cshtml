@@ -1,0 +1,105 @@
+﻿
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+
+    <title>@ViewBag.Title -HMS Dashboard</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="~/Areas/Dashboard/Content/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Custom styles for this template -->
+    <link href="~/Areas/Dashboard/Content/css/simple-sidebar.css" rel="stylesheet" />
+    <script src="~/Areas/Dashboard/Content/vendor/jquery/jquery.min.js"></script>
+    <link href="~/Content/fontawesome/css/all.css" rel="stylesheet" />
+    @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>*@
+</head>
+
+<body>
+
+    <div class="d-flex" id="wrapper">
+
+        <!-- Sidebar -->
+        <div class="bg-light border-right" id="sidebar-wrapper">
+            <div class="sidebar-heading"></div>
+            <div class="list-group list-group-flush">
+                <a href="@Url.Action("Index","Dashboard")" class="list-group-item list-group-item-action bg-light">
+                    <i class="fas fa-home mr-5" style="font-size:24px"></i><b>HMS</b>
+                </a>
+                <a href="@Url.Action("Index","AccomodationTypes")" class="list-group-item list-group-item-action bg-light">
+                    <i class="fas fa-hotel mr-2"></i>Accomodation Types
+                </a>
+                <a href="@Url.Action("Index","AccomodationPackages")" class="list-group-item list-group-item-action bg-light">
+                    <i class="fas fa-project-diagram mr-2"></i>Accomodation Packaes
+                </a>
+                <a href="@Url.Action("Index","Accomodations")" class="list-group-item list-group-item-action bg-light">
+                    <i class="fas fa-map-pin mr-2"></i>Accomodations
+                </a>
+                <a href="@Url.Action("Index","Roles")" class="list-group-item list-group-item-action bg-light">
+                    <i class="fas fa-users-cog mr-2"></i>Roles
+                </a>
+                <a href="@Url.Action("Index","Users")" class="list-group-item list-group-item-action bg-light">
+                    <i class="fas fa-user mr-2"></i>Users
+                </a>
+
+            </div>
+        </div>
+        <!-- /#sidebar-wrapper -->
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                <button class="btn btn-primary" id="menu-toggle"> <i class="fa fa-bars" style="font-size:30px"></i> </button>
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()"><i class="fas fa-sign-out-alt mr-2"></i>Logout</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="container-fluid">
+                @RenderBody()
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+
+    </div>
+
+
+
+    @using (Html.BeginForm("LogOff", "Account", new { area = "" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+    @Html.AntiForgeryToken()
+
+    }
+
+    <!-- /#wrapper -->
+    <!-- Bootstrap core JavaScript -->
+
+    <script src="~/Areas/Dashboard/Content/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Menu Toggle Script -->
+    <script>
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
+
+</body>
+
+</html>

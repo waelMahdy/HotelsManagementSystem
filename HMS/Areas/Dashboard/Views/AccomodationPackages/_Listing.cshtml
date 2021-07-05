@@ -1,0 +1,90 @@
+﻿@model HMS.Areas.Dashboard.ViewModels.AccomodationPackagesListingViewModel
+
+
+@if (Model != null && Model.AccomodationPackages != null && Model.AccomodationPackages.Count() > 0)
+{
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Number of rooms</th>
+                <th scope="col">fee per night</th>
+                <th scope="col">Accomodation type</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var accomodationPackage in Model.AccomodationPackages)
+            {
+                <tr>
+                    <td>@accomodationPackage.Name</td>
+                    <td>@accomodationPackage.NoOfRoom</td>
+                    <td>@String.Format("{0:N0}", accomodationPackage.FeePerNight) DHB</td>
+
+                    @*<td>@accomodationPackage.FeePerNight</td>*@
+                    <td>
+                        @if (accomodationPackage.AccomodationType != null)
+                        {
+                            @accomodationPackage.AccomodationType.Name
+
+                        }
+                    </td>
+                    <td>
+                        <button data-href="@Url.Action("Action", "AccomodationPackages" , new {ID=@accomodationPackage.ID})" type="button" class="data-btn btn btn-success" data-toggle="modal" data-target="#actionModal">
+                            <i class="fas fa-pen-alt"></i>
+                        </button>
+                        <button data-href="@Url.Action("Delete", "AccomodationPackages" , new {ID=@accomodationPackage.ID})" type="button" class="data-btn btn btn-danger" data-toggle="modal" data-target="#actionModal">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </td>
+                </tr>
+
+            }
+
+
+        </tbody>
+    </table>
+
+
+    if (Model.Pager.EndPage > 1)
+    {
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                @if (Model.Pager.CurrentPage > 1)
+                {
+                    <li class="page-item">
+                        <a href="@Url.Action("Index","AccomodationPackages" ,new { searchTerm=Model.SearchTerm,AccomodationTypeID=Model.AccomodationTypeID})" class="page-link"><i class="fas fa-angle-double-left"></i></a>
+                    </li>
+                    <li class="page-item">
+                        <a href="@Url.Action("Index","AccomodationPackages", new{page=Model.Pager.CurrentPage - 1,searchTerm=Model.SearchTerm,AccomodationTypeID=Model.AccomodationTypeID})" class="page-link"><i class="fas fa-angle-left"></i></a>
+                    </li>
+                }
+
+                @for (var page = Model.Pager.StartPage; page <= Model.Pager.EndPage; page++)
+                {
+                    <li class="page-item @(page == Model.Pager.CurrentPage ? "active" : "")">
+                        <a href="@Url.Action("Index","AccomodationPackages", new{page=page,searchTerm=Model.SearchTerm,AccomodationTypeID=Model.AccomodationTypeID})" class="page-link">@page</a>
+                    </li>
+                }
+
+                @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
+                {
+                    <li class="page-item">
+                        <a href="@Url.Action("Index","AccomodationPackages", new{page=Model.Pager.CurrentPage + 1,searchTerm=Model.SearchTerm,AccomodationTypeID=Model.AccomodationTypeID})" class="page-link"><i class="fas fa-angle-right"></i></a>
+                    </li>
+                    <li class="page-item">
+                        <a href="@Url.Action("Index","AccomodationPackages", new{page=Model.Pager.TotalPages,searchTerm=Model.SearchTerm,AccomodationTypeID=Model.AccomodationTypeID})" class="page-link"><i class="fas fa-angle-double-right"></i></a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    }
+}
+else
+{
+    <div class="alert alert-warning">
+        Sorry! No records exist.
+    </div>
+}
